@@ -15,6 +15,7 @@ https://www.python.org/downloads/release/python-3137/
 ollama 다운경로
 https://ollama.com/download
 
+```plaintext
 C:\llm\
  ├─ models\
  │   ├─ Meta-Llama-3.1-8B-Instruct-Q3_K_S.gguf   (개인PC용)
@@ -29,6 +30,7 @@ C:\llm\
      ├─ index_repo.py
      ├─ ask.py
      └─ agent_apply.py    (선택: diff 자동 적용기)
+```
 
 .py나 확장자 없는 샘플은 메모장에서 “모든 파일” 선택 → 확장자 붙여 저장해서 tools/에 넣으면 됨.
 
