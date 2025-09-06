@@ -1,7 +1,12 @@
 로컬 LLM + 코드 RAG 세팅 (Windows / 폐쇄망)
 
-<img src="./aaa.png" width="300" />
-<img src="./bbb.png" width="300" />
+<img src="./aaa.png" width="500" />
+
+사진에서 볼 수 있듯, 인터넷이 안되는 상황에서 
+
+<img src="./bbb.png" width="500" />
+
+답변을 해주는 모습. 즉, LLM이 로컬에서 돌고있는것이다.
 
 ```plaintext
 이직한 회사가 내부망을 쓰는데 chatGPT를 다른 컴퓨터에서 쓰고 복붙하는 게 귀찮아서 직접 정리함.
