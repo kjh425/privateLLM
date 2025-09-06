@@ -1,0 +1,73 @@
+# index_repo.py - 표준 라이브러리만 사용 (BM25 간단구현)
+import os, re, json, math, argparse
+
+EXTS = {'.java', '.xml', '.properties', '.yml', '.yaml', '.gradle', '.pom', '.jsp'}
+MAX_CHARS = 1500   # 청크 크기
+OVERLAP = 200      # 겹침
+
+def read_text(path):
+    try:
+        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            return f.read()
+    except:
+        return ""
+
+def chunk_text(text, max_chars=MAX_CHARS, overlap=OVERLAP):
+    chunks = []
+    i = 0
+    while i < len(text):
+        end = min(len(text), i + max_chars)
+        chunks.append(text[i:end])
+        i = end - overlap
+        if i < 0: i = 0
+    return chunks
+
+TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9_]*|[\uAC00-\uD7A3]+")
+
+def tokenize(s):
+    s = s.lower()
+    return TOKEN.findall(s)
+
+def build_index(root):
+    docs = []
+    for base, _, files in os.walk(root):
+        for fn in files:
+            ext = os.path.splitext(fn)[1].lower()
+            if ext in EXTS or fn in ('pom.xml','build.gradle','settings.gradle','web.xml'):
+                path = os.path.join(base, fn)
+                print("SCAN: ",path)
+                txt = read_text(path)
+                if not txt: continue
+                for idx, ch in enumerate(chunk_text(txt)):
+                    docs.append({
+                        "id": len(docs),
+                        "path": path,
+                        "part": idx,
+                        "text": ch
+                    })
+    # BM25 준비
+    N = len(docs)
+    df = {}
+    tokens_per_doc = []
+    for d in docs:
+        toks = tokenize(d["text"])
+        tokens_per_doc.append(toks)
+        for t in set(toks):
+            df[t] = df.get(t, 0) + 1
+    avgdl = sum(len(t) for t in tokens_per_doc)/N if N else 0
+    idf = {t: math.log(1 + (N - v + 0.5)/(v + 0.5)) for t, v in df.items()}
+
+    index = {
+        "docs": docs,
+        "avgdl": avgdl,
+        "idf": idf
+    }
+    with open("code_index.json", "w", encoding="utf-8") as f:
+        json.dump(index, f, ensure_ascii=False)
+    print(f"Indexed {N} chunks -> code_index.json")
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--root", required=True, help="레거시 코드 루트 폴더")
+    args = ap.parse_args()
+    build_index(args.root)

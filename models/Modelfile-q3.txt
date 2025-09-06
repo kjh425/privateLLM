@@ -1,0 +1,2 @@
+FROM C:\llm\models\Meta-Llama-3.1-8B-Instruct-Q3_K_S.gguf
+PARAMETER temperature 0.2

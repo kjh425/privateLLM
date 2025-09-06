@@ -1,0 +1,76 @@
+1. 
+https://github.com/ggml-org/llama.cpp/releases?utm_source=chatgpt.com
+에 들어가서
+llama-b6394-bin-win-cpu-x64.zip 체제를 다운받음.
+
+2. 인터넷이 안되는 폐쇄망 환경으로 zip파일 옮김.
+
+3. https://www.python.org/downloads/release/python-3137/ 
+링크 들어가서 64비트 (운영체제 맞게) 다운로드 하고 설치파일 실행에서 꼭 Add python.exe to PATH 옵션 선택
+
+4. 폴더구조맞게 수정
+
+5. ollama설치 및 버전확인
+
+ollama -v
+ollama version is 0.11.10
+
+(ollama 모델등록)
+ollama create my-llama31 -f C:\llm\models\Modelfile.txt
+
+(실행)
+ollama run my-llama31
+
+(프로젝트 분석)
+
+cd /d C:\llm\tools
+python index_repo.py --root "<플젝경로>"
+
+하게되면 tools/ 하위에 code_index.json 즉 내 프로젝트를 분석한 json파일이 생성된다
+
+예시)
+cd /d C:\llm\tools
+python index_repo.py --root "C:\Users\Admin\Documents\workspace-sts-3.9.17.RELEASE\jhproject"
+
+
+
+(API)
+curl http://127.0.0.1:11434/v1/chat/completions ^
+  -H "Content-Type: application/json" ^
+  -d "{\"model\": \"my-llama31\", \"messages\":[{\"role\":\"user\",\"content\":\"테스트\"}]}"
+
+python ask.py --q "JwtAuthenticationFilter 문제와 해결 방법" ^
+  --api "http://127.0.0.1:11434/v1/chat/completions" ^
+  --model "my-llama31"
+
+(파워쉘에선 tools 폴더안에서...)
+python ask.py --q '<질문>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+
+python ask.py --q '현재 내 프로젝트에서 톰캣으로 8080으로 올리면 나는 hello 라고 웹에 찍고싶어.
+그럼 api return을 하든 jsp를 만들던 해야겠지? 어떻게 수정할수있지?' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+
+python ask.py --q '<>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+
+python ask.py --q '그럼 현재 homeController보여? 그 안에 /hello 라고 되어있는데 너가 볼수있는지 모르겠네 ' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+
+python ask.py --q '<>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+python ask.py --q '<>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+python ask.py --q '<>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+python ask.py --q '<>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+python ask.py --q '<>' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+python ask.py --q '안녕? 인사테스트하는거야' --api "http://127.0.0.1:11434/v1/chat/completions" --model "my-llama31"
+
+
+메모장에서 “따옴표로 감싸기”
+
+메모장에서 내용 작성
+
+저장할 때 파일 이름에 "Modelfile" (큰따옴표 포함) 입력
+
+형식은 “모든 파일(.)”로 선택
+👉 이렇게 하면 확장자가 안 붙고 정확히 Modelfile로 저장됨
+
+C:\llm\models\Modelfile 내용(사용할 모델로 교체):
+
+FROM C:\llm\models\Meta-Llama-3.1-8B-Instruct-Q3_K_S.gguf
+PARAMETER temperature 0.2

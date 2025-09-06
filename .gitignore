@@ -1,0 +1,6 @@
+# 모델 파일, 인덱스 결과, 캐시 제외
+*.gguf
+code_index.json
+__pycache__/
+*.bak
+*.exe
