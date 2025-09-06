@@ -1,5 +1,6 @@
 로컬 LLM + 코드 RAG 세팅 (Windows / 폐쇄망)
 
+```plaintext
 이직한 회사가 내부망을 쓰는데 chatGPT를 다른 컴퓨터에서 쓰고 복붙하는 게 귀찮아서 직접 정리함.
 USB → 폐쇄망 PC로 복사 후 아래 구조로 세팅.
 
@@ -15,7 +16,7 @@ https://www.python.org/downloads/release/python-3137/
 ollama 다운경로
 https://ollama.com/download
 
-```plaintext
+
 C:\llm\
  ├─ models\
  │   ├─ Meta-Llama-3.1-8B-Instruct-Q3_K_S.gguf   (개인PC용)
@@ -30,7 +31,7 @@ C:\llm\
      ├─ index_repo.py
      ├─ ask.py
      └─ agent_apply.py    (선택: diff 자동 적용기)
-```
+
 
 .py나 확장자 없는 샘플은 메모장에서 “모든 파일” 선택 → 확장자 붙여 저장해서 tools/에 넣으면 됨.
 
@@ -139,3 +140,5 @@ Error: listen tcp 127.0.0.1:11434: bind: Only one usage of each socket address..
 모델 특성 바꾸려면 ask.txt나 index_repo.txt 참고 → 수정 후 .py로 변환 → tools/에 넣고 실행
 
 (2025/09/06) Q3 모델 기준 메모리 90% 사용. 그래도 코드 읽고 답변 주는 거 꽤 괜찮음 😆
+
+```
