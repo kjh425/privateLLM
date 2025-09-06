@@ -1,10 +1,10 @@
 로컬 LLM + 코드 RAG 세팅 (Windows / 폐쇄망)
 
-<img src="./aaa.png" width="500" />
+<img src="./aaa.png" width="1000" />
 
 사진에서 볼 수 있듯, 인터넷이 안되는 상황에서 
 
-<img src="./bbb.png" width="500" />
+<img src="./bbb.png" width="1000" />
 
 답변을 해주는 모습. 즉, LLM이 로컬에서 돌고있는것이다.
 
